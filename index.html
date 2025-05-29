@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Exam Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">IELTS Exam Simulator</div>
+            <div class="timer-container">
+                <span class="timer-icon">⏱</span>
+                <span class="timer" id="main-timer">60:00</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container main-content">
+        <div class="test-container">
+            <!-- Test Introduction -->
+            <div id="test-intro" class="instructions-screen">
+                <h2 class="instructions-title">IELTS Exam Simulator</h2>
+                <div class="instructions-content">
+                    <p>Welcome to the IELTS Exam Simulator. This application closely replicates the actual IELTS test experience, including all four sections: Listening, Reading, Writing, and Speaking.</p>
+                    <p>Before you begin, please ensure that:</p>
+                    <ul class="instructions-list">
+                        <li>You have 2 hours and 45 minutes available to complete the test</li>
+                        <li>You are in a quiet environment without distractions</li>
+                        <li>You have headphones or speakers for the Listening section</li>
+                        <li>You have a microphone for the Speaking section</li>
+                    </ul>
+                    <p>You will start with the Listening section (30 minutes), followed by Reading (60 minutes), Writing (60 minutes), and finally Speaking (11-14 minutes).</p>
+                </div>
+                <button class="start-btn" id="start-test-btn">Start Test</button>
+            </div>
+            
+            <!-- Listening Section Instructions -->
+            <div id="listening-instructions" class="instructions-screen hidden">
+                <h2 class="instructions-title">Listening Section</h2>
+                <div class="instructions-content">
+                    <p>In this section, you will listen to four recordings of native English speakers and then answer a series of questions.</p>
+                    <p>The recordings will be played <strong>ONCE only</strong>.</p>
+                    <ul class="instructions-list">
+                        <li>Recording 1: A conversation between two people in an everyday social context</li>
+                        <li>Recording 2: A monologue set in an everyday social context</li>
+                        <li>Recording 3: A conversation between up to four people set in an educational or training context</li>
+                        <li>Recording 4: A monologue on an academic subject</li>
+                    </ul>
+                    <p>You will have 30 minutes to complete this section (plus 10 minutes to transfer your answers to the answer sheet).</p>
+                </div>
+                <button class="start-btn" id="start-listening-btn">Start Listening Section</button>
+            </div>
+            
+            <!-- Listening Test Content -->
+            <div id="listening-test" class="hidden">
+                <div class="section-title">
+                    <h1>Listening Test</h1>
+                    <div class="question-number">Question: <span id="current-listening-question">1</span> of <span id="total-listening-questions">40</span></div>
+                </div>
+                
+                <div class="audio-container">
+                    <div class="audio-controls">
+                        <div class="audio-btn" id="play-audio-btn">▶</div>
+                        <div class="audio-timeline">
+                            <div class="audio-progress"></div>
+                        </div>
+                        <div class="audio-time">0:00 / 2:30</div>
+                    </div>
+                </div>
+                
+                <!-- Sample Listening Question 1 - MCQ -->
+                <div class="question-container" id="listening-q1">
+                    <p class="question-text">1. What is the main topic of the conversation?</p>
+                    <div class="options-container">
+                        <div class="option" data-option="A">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">A university research project</div>
+                        </div>
+                        <div class="option" data-option="B">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">Summer job opportunities</div>
+                        </div>
+                        <div class="option" data-option="C">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Student housing arrangements</div>
+                        </div>
+                        <div class="option" data-option="D">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">Campus renovation plans</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Listening Question 2 - Fill in the blank -->
+                <div class="question-container hidden" id="listening-q2">
+                    <p class="question-text">2. The meeting will be held in Room _____________ of the Main Building.</p>
+                    <div class="fill-blank-container">
+                        <input type="text" class="blank-input" placeholder="Type your answer">
+                    </div>
+                </div>
+                
+                <!-- Sample Listening Question 3 - Matching -->
+                <div class="question-container hidden" id="listening-q3">
+                    <p class="question-text">3. Match the speaker with their role in the research project.</p>
+                    <div class="matching-container">
+                        <div class="matching-column">
+                            <div class="matching-item">Dr. Johnson</div>
+                            <div class="matching-item">Sarah Wilson</div>
+                            <div class="matching-item">Professor Lee</div>
+                        </div>
+                        <div class="matching-column">
+                            <div class="matching-item">
+                                Lead Researcher
+                                <select class="matching-select">
+                                    <option value="">-- Select Person --</option>
+                                    <option value="johnson">Dr. Johnson</option>
+                                    <option value="wilson">Sarah Wilson</option>
+                                    <option value="lee">Professor Lee</option>
+                                </select>
+                            </div>
+                            <div class="matching-item">
+                                Data Analyst
+                                <select class="matching-select">
+                                    <option value="">-- Select Person --</option>
+                                    <option value="johnson">Dr. Johnson</option>
+                                    <option value="wilson">Sarah Wilson</option>
+                                    <option value="lee">Professor Lee</option>
+                                </select>
+                            </div>
+                            <div class="matching-item">
+                                Project Supervisor
+                                <select class="matching-select">
+                                    <option value="">-- Select Person --</option>
+                                    <option value="johnson">Dr. Johnson</option>
+                                    <option value="wilson">Sarah Wilson</option>
+                                    <option value="lee">Professor Lee</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons" style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <button class="btn btn-secondary" id="prev-question-btn">Previous Question</button>
+                    <button class="btn btn-primary" id="next-question-btn">Next Question</button>
+                </div>
+            </div>
+            
+            <!-- Reading Section Instructions -->
+            <div id="reading-instructions" class="instructions-screen hidden">
+                <h2 class="instructions-title">Reading Section</h2>
+                <div class="instructions-content">
+                    <p>In this section, you will read three passages and answer a number of questions.</p>
+                    <p>You should spend about 20 minutes on each passage (60 minutes total).</p>
+                    <ul class="instructions-list">
+                        <li>The passages increase in difficulty level</li>
+                        <li>Each passage will be followed by 13-14 questions</li>
+                        <li>Questions may include multiple choice, identifying information, matching information, sentence completion, and more</li>
+                        <li>You may need to identify specific details, main ideas, or the writer's views/claims</li>
+                    </ul>
+                    <p>You will have 60 minutes to answer all questions for all three passages.</p>
+                </div>
+                <button class="start-btn" id="start-reading-btn">Start Reading Section</button>
+            </div>
+            
+            <!-- Reading Test Content -->
+            <div id="reading-test" class="hidden">
+                <div class="section-title">
+                    <h1>Reading Test</h1>
+                    <div class="question-number">Question: <span id="current-reading-question">1</span> of <span id="total-reading-questions">40</span></div>
+                </div>
+                
+                <div class="reading-container">
+                    <div class="passage-container">
+                        <h3 class="passage-title">The Impact of Artificial Intelligence on Modern Society</h3>
+                        <div class="passage-text">
+                            <p>Artificial intelligence (AI) has rapidly transformed from a specialized research field into a pervasive technology affecting virtually every aspect of society. As algorithms become increasingly sophisticated and data more abundant, both the potential benefits and challenges of AI have expanded dramatically, prompting important discussions about how this technology should be developed and governed.</p>
+                            
+                            <p>In the workplace, AI is augmenting human capabilities while simultaneously raising questions about employment displacement. Routine and predictable tasks across industries are increasingly being automated, from manufacturing assembly lines to customer service interactions. According to a 2020 World Economic Forum report, 85 million jobs may be displaced by automation by 2025, while 97 million new roles adapted to the division of labor between humans, machines, and algorithms may emerge. This suggests a profound shift rather than simply a reduction in available work.</p>
+                            
+                            <p>Meanwhile, healthcare has emerged as one of the most promising applications of AI. Machine learning algorithms can analyze medical images to detect diseases like cancer with accuracy rivaling or sometimes exceeding human specialists. Natural language processing enables the extraction of relevant information from medical literature and patient records, while predictive analytics can identify individuals at risk for various conditions, potentially enabling earlier interventions. These developments could significantly improve patient outcomes while reducing costs, particularly in regions with limited access to healthcare professionals.</p>
+                            
+                            <p>AI is also transforming education by enabling personalized learning experiences tailored to individual students' needs. Adaptive learning platforms can identify knowledge gaps, adjust difficulty levels, and provide targeted feedback, potentially addressing the limitations of traditional one-size-fits-all educational approaches. However, integrating these technologies effectively requires careful consideration of pedagogical approaches and teacher training to ensure technology enhances rather than diminishes the learning experience.</p>
+                            
+                            <p>Despite these potential benefits, significant ethical concerns have emerged. Decision-making algorithms deployed in areas like hiring, lending, criminal justice, and healthcare may inadvertently perpetuate or amplify existing social biases if trained on data reflecting historical discrimination. The "black box" nature of many advanced machine learning techniques makes it difficult to understand how decisions are reached, creating challenges for accountability and oversight.</p>
+                            
+                            <p>Privacy concerns are equally pressing, as AI systems typically require vast amounts of data to function effectively. The ability to extract insights from seemingly innocuous information, combined with increasingly sophisticated surveillance capabilities, raises questions about appropriate limits on data collection and analysis. Moreover, as facial recognition and other biometric identification technologies become more widespread, balancing security applications with civil liberties has become increasingly challenging.</p>
+                            
+                            <p>The global nature of AI development has also introduced geopolitical dimensions to its governance. Different regions have adopted varying approaches, with the European Union emphasizing regulation and individual rights, the United States favoring industry-led initiatives, and China investing heavily in AI as a national strategic priority with fewer restrictions on data collection. These divergent approaches complicate efforts to establish international standards and norms.</p>
+                            
+                            <p>Looking ahead, ensuring that AI benefits humanity broadly will require thoughtful collaboration among technologists, policymakers, industry leaders, and civil society. Developing technical standards for safety, robustness, and fairness; establishing appropriate regulatory frameworks; investing in education and training; and fostering inclusive dialogue about how AI should be deployed are all essential components of responsible AI development. By addressing these challenges proactively, societies can work toward harnessing AI's potential while mitigating its risks.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="questions-container">
+                        <!-- Sample Reading Question 1 - MCQ -->
+                        <div class="question-container" id="reading-q1">
+                            <p class="question-text">1. According to the World Economic Forum report mentioned in the passage, by 2025:</p>
+                            <div class="options-container">
+                                <div class="option" data-option="A">
+                                    <div class="option-letter">A</div>
+                                    <div class="option-text">AI will eliminate more jobs than it creates</div>
+                                </div>
+                                <div class="option" data-option="B">
+                                    <div class="option-letter">B</div>
+                                    <div class="option-text">85 million jobs will be created by automation</div>
+                                </div>
+                                <div class="option" data-option="C">
+                                    <div class="option-letter">C</div>
+                                    <div class="option-text">The division of labor will shift with both job displacement and creation</div>
+                                </div>
+                                <div class="option" data-option="D">
+                                    <div class="option-letter">D</div>
+                                    <div class="option-text">97 million workers will need to be retrained</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Reading Question 2 - True/False -->
+                        <div class="question-container hidden" id="reading-q2">
+                            <p class="question-text">2. The passage suggests that AI systems in healthcare are currently less accurate than human specialists.</p>
+                            <div class="true-false-options">
+                                <div class="true-false-option" data-option="true">
+                                    <input type="radio" name="q2-tf" id="q2-true">
+                                    <label for="q2-true">TRUE</label>
+                                </div>
+                                <div class="true-false-option" data-option="false">
+                                    <input type="radio" name="q2-tf" id="q2-false">
+                                    <label for="q2-false">FALSE</label>
+                                </div>
+                                <div class="true-false-option" data-option="not-given">
+                                    <input type="radio" name="q2-tf" id="q2-ng">
+                                    <label for="q2-ng">NOT GIVEN</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Reading Question 3 - Fill in the blank -->
+                        <div class="question-container hidden" id="reading-q3">
+                            <p class="question-text">3. According to the passage, one of the major concerns with decision-making algorithms is that they may ____________ existing social biases.</p>
+                            <div class="fill-blank-container">
+                                <input type="text" class="blank-input" placeholder="Type your answer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons" style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <button class="btn btn-secondary" id="prev-reading-question-btn">Previous Question</button>
+                    <button class="btn btn-primary" id="next-reading-question-btn">Next Question</button>
+                </div>
+            </div>
+            
+            <!-- Writing Section Instructions -->
+            <div id="writing-instructions" class="instructions-screen hidden">
+                <h2 class="instructions-title">Writing Section</h2>
+                <div class="instructions-content">
+                    <p>In this section, you will complete two writing tasks.</p>
+                    <ul class="instructions-list">
+                        <li><strong>Task 1:</strong> Describe visual information (graph, table, chart, or diagram) in your own words. You should write at least 150 words in about 20 minutes.</li>
+                        <li><strong>Task 2:</strong> Write an essay in response to a point of view, argument, or problem. You should write at least 250 words in about 40 minutes.</li>
+                    </ul>
+                    <p>Task 2 contributes twice as much as Task 1 to your Writing band score.</p>
+                    <p>You will have 60 minutes to complete both tasks.</p>
+                </div>
+                <button class="start-btn" id="start-writing-btn">Start Writing Section</button>
+            </div>
+            
+            <!-- Writing Test Content -->
+            <div id="writing-test" class="hidden">
+                <div class="section-title">
+                    <h1>Writing Test</h1>
+                    <div class="question-number">Task: <span id="current-writing-task">1</span> of <span id="total-writing-tasks">2</span></div>
+                </div>
+                
+                <div class="writing-container">
+                    <!-- Task 1 -->
+                    <div id="writing-task1">
+                        <div class="writing-instructions">
+                            <p class="writing-task">
+                                <strong>Task 1:</strong> The graph below shows the percentage of people living in urban and rural areas in a specific country from 1950 to 2050 (projected).<br><br>
+                                Summarize the information by selecting and reporting the main features, and make comparisons where relevant.
+                            </p>
+                            <p style="margin-top: 10px;"><em>You should write at least 150 words.</em></p>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 20px 0;">
+                            <img src="images/urban-rural-population.png" alt="Urban and Rural Population Graph" style="max-width: 100%; height: auto;">
+                        </div>
+                        
+                        <div class="editor-container">
+                            <textarea class="writing-editor" id="task1-editor" placeholder="Write your response here..."></textarea>
+                            <div class="word-count" id="task1-word-count">Word count: 0</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Task 2 (hidden initially) -->
+                    <div id="writing-task2" class="hidden">
+                        <div class="writing-instructions">
+                            <p class="writing-task">
+                                <strong>Task 2:</strong> Some people believe that technology has made our lives more complicated rather than simpler. To what extent do you agree or disagree with this opinion?<br><br>
+                                Give reasons for your answer and include any relevant examples from your own knowledge or experience.
+                            </p>
+                            <p style="margin-top: 10px;"><em>You should write at least 250 words.</em></p>
+                        </div>
+                        
+                        <div class="editor-container">
+                            <textarea class="writing-editor" id="task2-editor" placeholder="Write your response here..."></textarea>
+                            <div class="word-count" id="task2-word-count">Word count: 0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons" style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <button class="btn btn-secondary hidden" id="back-to-task1-btn">Back to Task 1</button>
+                    <button class="btn btn-primary" id="go-to-task2-btn">Go to Task 2</button>
+                    <button class="btn btn-primary hidden" id="finish-writing-btn">Finish Writing Section</button>
+                    <button class="btn btn-gemini" id="evaluate-writing-btn">Evaluate with Gemini</button>
+                </div>
+            </div>
+            
+            <!-- Speaking Section Instructions -->
+            <div id="speaking-instructions" class="instructions-screen hidden">
+                <h2 class="instructions-title">Speaking Section</h2>
+                <div class="instructions-content">
+                    <p>In this section, you will participate in a recorded interview with the examiner.</p>
+                    <p>The test has three parts:</p>
+                    <ul class="instructions-list">
+                        <li><strong>Part 1:</strong> Introduction and interview (4-5 minutes) - General questions about yourself and familiar topics</li>
+                        <li><strong>Part 2:</strong> Long turn (3-4 minutes) - You will be given a topic card and have 1 minute to prepare, then speak for 1-2 minutes</li>
+                        <li><strong>Part 3:</strong> Discussion (4-5 minutes) - Further questions connected to the Part 2 topic</li>
+                    </ul>
+                    <p>The entire Speaking section will take about 11-14 minutes.</p>
+                </div>
+                <button class="start-btn" id="start-speaking-btn">Start Speaking Section</button>
+            </div>
+            
+            <!-- Speaking Test Content -->
+            <div id="speaking-test" class="hidden">
+                <div class="section-title">
+                    <h1>Speaking Test</h1>
+                    <div class="question-number">Part: <span id="current-speaking-part">1</span> of 3</div>
+                </div>
+                
+                <div class="speaking-container">
+                    <!-- Part 1 -->
+                    <div id="speaking-part1">
+                        <div class="speaking-instructions">
+                            <p class="speaking-question">Part 1: Introduction and Interview</p>
+                            <p>The examiner will ask you general questions about yourself and familiar topics such as your home, family, work, studies and interests.</p>
+                        </div>
+                        
+                        <div class="speaking-prompt">
+                            <p><strong>Let's talk about your hometown.</strong></p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Where is your hometown located?</li>
+                                <li>What do you like most about your hometown?</li>
+                                <li>Has your hometown changed much in recent years?</li>
+                                <li>Would you recommend your hometown as a place to visit?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="recording-controls">
+                            <button class="btn btn-primary" id="start-recording-btn">Start Recording</button>
+                            <div class="recording-indicator hidden">
+                                <div class="recording-dot"></div>
+                                <span>Recording in progress...</span>
+                            </div>
+                            <button class="btn btn-danger hidden" id="stop-recording-btn">Stop Recording</button>
+                        </div>
+                        
+                        <div class="speaking-timer">02:30</div>
+                        
+                        <div class="speaking-response hidden" id="speaking-response-area">
+                            <textarea id="speaking-transcript" placeholder="Transcript of your response will appear here..." rows="8" readonly></textarea>
+                            <button class="btn btn-gemini" id="evaluate-speaking-btn">Evaluate with Gemini</button>
+                        </div>
+                        
+                        <div class="speaking-controls">
+                            <button class="btn btn-primary" id="next-speaking-prompt-btn">Next Prompt</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Part 2 (hidden initially) -->
+                    <div id="speaking-part2" class="hidden">
+                        <div class="speaking-instructions">
+                            <p class="speaking-question">Part 2: Long Turn (Cue Card)</p>
+                            <p>You will be given a topic card and have 1 minute to prepare. Then, you will need to speak for 1-2 minutes on the topic.</p>
+                        </div>
+                        
+                        <div class="speaking-prompt">
+                            <p><strong>Describe a skill you would like to learn in the future.</strong></p>
+                            <p>You should say:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>What this skill is</li>
+                                <li>How you would learn it</li>
+                                <li>Why you want to learn it</li>
+                                <li>And explain how it would benefit you in the future</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="speaking-timer" id="prep-timer">Preparation Time: 01:00</div>
+                        
+                        <div id="preparation-controls" class="speaking-controls">
+                            <button class="btn btn-primary" id="start-speaking-btn2">Start Speaking</button>
+                        </div>
+                        
+                        <div id="speaking-controls2" class="speaking-controls hidden">
+                            <div class="recording-indicator">
+                                <div class="recording-dot"></div>
+                                <span>Recording in progress...</span>
+                            </div>
+                            
+                            <div class="speaking-timer" id="speaking-timer2">02:00</div>
+                            
+                            <button class="btn btn-danger" id="stop-recording-btn2">Stop Recording</button>
+                            <button class="btn btn-primary" id="next-speaking-part-btn">Go to Part 3</button>
+                            
+                            <div class="speaking-response hidden" id="speaking-response-area2">
+                                <textarea id="speaking-transcript2" placeholder="Transcript of your response will appear here..." rows="8" readonly></textarea>
+                                <button class="btn btn-gemini" id="evaluate-speaking-btn2">Evaluate with Gemini</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Part 3 (hidden initially) -->
+                    <div id="speaking-part3" class="hidden">
+                        <div class="speaking-instructions">
+                            <p class="speaking-question">Part 3: Discussion</p>
+                            <p>Now the examiner will ask you more questions related to the topic in Part 2.</p>
+                        </div>
+                        
+                        <div class="speaking-prompt">
+                            <p><strong>Let's talk more about learning skills.</strong></p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Why do you think people are sometimes reluctant to learn new skills?</li>
+                                <li>How has technology changed the way people learn skills today?</li>
+                                <li>Do you think traditional skills are being lost in your country? Why?</li>
+                                <li>What role should schools play in teaching practical skills versus academic knowledge?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="recording-controls">
+                            <button class="btn btn-primary" id="start-recording-btn3">Start Recording</button>
+                            <div class="recording-indicator hidden">
+                                <div class="recording-dot"></div>
+                                <span>Recording in progress...</span>
+                            </div>
+                            <button class="btn btn-danger hidden" id="stop-recording-btn3">Stop Recording</button>
+                        </div>
+                        
+                        <div class="speaking-timer">04:00</div>
+                        
+                        <div class="speaking-response hidden" id="speaking-response-area3">
+                            <textarea id="speaking-transcript3" placeholder="Transcript of your response will appear here..." rows="8" readonly></textarea>
+                            <button class="btn btn-gemini" id="evaluate-speaking-btn3">Evaluate with Gemini</button>
+                        </div>
+                        
+                        <div class="speaking-controls">
+                            <button class="btn btn-primary" id="finish-speaking-btn">Finish Speaking Section</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Complete Screen -->
+            <div id="test-complete" class="instructions-screen hidden">
+                <h2 class="instructions-title">Test Complete</h2>
+                <div class="instructions-content">
+                    <p>Congratulations! You have completed the IELTS Exam Simulator.</p>
+                    <p>Your responses have been evaluated by Gemini AI. Here are your scores:</p>
+                    
+                    <div class="score-summary">
+                        <div class="score-section">
+                            <h3>Listening</h3>
+                            <div class="score-band" id="listening-score">-</div>
+                        </div>
+                        <div class="score-section">
+                            <h3>Reading</h3>
+                            <div class="score-band" id="reading-score">-</div>
+                        </div>
+                        <div class="score-section">
+                            <h3>Writing</h3>
+                            <div class="score-band" id="writing-score">-</div>
+                        </div>
+                        <div class="score-section">
+                            <h3>Speaking</h3>
+                            <div class="score-band" id="speaking-score">-</div>
+                        </div>
+                        <div class="score-section overall">
+                            <h3>Overall Band Score</h3>
+                            <div class="score-band" id="overall-score">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-container">
+                        <h3>Detailed Feedback</h3>
+                        <div id="detailed-feedback">
+                            <p>Your detailed feedback will appear here after your test is evaluated.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="start-btn" id="restart-btn">Restart Test</button>
+            </div>
+            
+            <!-- Gemini Evaluation Modal -->
+            <div class="modal-overlay" id="gemini-modal-overlay">
+                <div class="modal gemini-modal">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Gemini Evaluation</h3>
+                    </div>
+                    <div class="modal-content">
+                        <div class="evaluation-spinner" id="evaluation-spinner">
+                            <div class="spinner"></div>
+                            <p>Gemini AI is evaluating your response...</p>
+                        </div>
+                        
+                        <div class="evaluation-results hidden" id="evaluation-results">
+                            <div class="band-score">
+                                <h4>Band Score:</h4>
+                                <div class="score-display" id="modal-band-score">7.0</div>
+                            </div>
+                            
+                            <div class="evaluation-criteria">
+                                <div class="criterion">
+                                    <h4>Task Achievement / Fluency & Coherence:</h4>
+                                    <div class="criterion-score" id="criterion1-score">7</div>
+                                    <p id="criterion1-feedback"></p>
+                                </div>
+                                
+                                <div class="criterion">
+                                    <h4>Coherence & Cohesion / Lexical Resource:</h4>
+                                    <div class="criterion-score" id="criterion2-score">7</div>
+                                    <p id="criterion2-feedback"></p>
+                                </div>
+                                
+                                <div class="criterion">
+                                    <h4>Lexical Resource / Grammatical Range:</h4>
+                                    <div class="criterion-score" id="criterion3-score">6.5</div>
+                                    <p id="criterion3-feedback"></p>
+                                </div>
+                                
+                                <div class="criterion">
+                                    <h4>Grammatical Range & Accuracy / Pronunciation:</h4>
+                                    <div class="criterion-score" id="criterion4-score">7</div>
+                                    <p id="criterion4-feedback"></p>
+                                </div>
+                            </div>
+                            
+                            <div class="overall-feedback">
+                                <h4>Overall Feedback:</h4>
+                                <p id="overall-feedback"></p>
+                            </div>
+                            
+                            <div class="improvement-suggestions">
+                                <h4>Suggestions for Improvement:</h4>
+                                <ul id="improvement-suggestions"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="close-evaluation-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-panel">
+            <div class="test-info">
+                <div class="info-item">
+                    <span class="info-label">Current Section:</span>
+                    <span class="info-value" id="current-section-display">Introduction</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Remaining Time:</span>
+                    <span class="info-value" id="section-timer">00:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Total Progress:</span>
+                    <span class="info-value" id="progress-percentage">0%</span>
+                </div>
+            </div>
+            
+            <div class="question-navigation" id="question-nav">
+                <h3 class="nav-title">Question Navigation</h3>
+                <div class="question-buttons" id="question-buttons">
+                    <!-- Question buttons will be dynamically added here -->
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-outline" id="flag-question-btn">
+                    <span>⚐</span>
+                    <span>Flag this question</span>
+                </button>
+                <button class="btn btn-outline" id="review-flagged-btn">
+                    <span>⚑</span>
+                    <span>Review flagged questions</span>
+                </button>
+                <button class="btn btn-secondary" id="section-instructions-btn">Section Instructions</button>
+                <button class="btn btn-danger" id="end-section-btn">End Current Section</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirm-modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">End Current Section?</h3>
+            </div>
+            <div class="modal-content">
+                <p>Are you sure you want to end the current section? You will not be able to return to this section once you proceed.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-end-section-btn">Cancel</button>
+                <button class="btn btn-danger" id="confirm-end-section-btn">End Section</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
